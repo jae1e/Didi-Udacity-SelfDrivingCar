@@ -43,7 +43,7 @@ The ideal of the model as follows:
 + A tensor of shape `(64,256,1)` where the number at the position `[x,y,0]` presents the at which probability the the pixel `[x,y]` belongs the the obstacle. This part works as a segmentation problem (`out1` line 110, file `fully_conv_model_for_lidar.py`)
 + A tensor of shape `(64,256,7)` where the first 6 value vector `[x,y,:]` presents the coordinate of two opposite  corners of the bounding box containing the point `[x,y]`, the last value encodes how narrow the bottom rectangular of the box is. I chose the corners number 0 and 6 of the box, the other six corners will be inferred from those values. This part works as a multi-regression problem (`out2` line 118, file `fully_conv_model_for_lidar.py`)
 
-`Loss function`: function `my_loss()` line 88-107 file `train.py`. The total loss includes two losses: log loss for segmentation part (`seg_loss`) and mean squared error (MSE) for regression part. The total loss is defined as sum of logistic loss ( seg_y*log(seg_pred) + (1-seg_y)*log(1-seg_pred) ) from segmentation part and mean squared error only in the bounding box pixel ( seg_y * MSE(reg_y, reg_pred) ) from regression part.
+`Loss function`: function `my_loss()` line 88-107 file `train.py`. The total loss includes two losses: log loss for segmentation part (`seg_loss`) and mean squared error (MSE) for regression part. The total loss is defined as sum of logistic loss ( -(seg_y*log(seg_pred) + (1-seg_y)*log(1-seg_pred)) ) from segmentation part and mean squared error only in the bounding box pixel ( seg_y * MSE(reg_y, reg_pred) ) from regression part.
 
 ## How to setup
 
